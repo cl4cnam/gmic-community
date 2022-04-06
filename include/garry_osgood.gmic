@@ -72,7 +72,7 @@ gtutor_blur_img :
       smooth.. .,$range
     done
     rm.
-  endl
+  done
 
 gtutor_blur_img_preview :
   gtutor_blur_img ${^0}
@@ -167,13 +167,13 @@ hedcut : check "${1=0.5}<=1 && $1>=0 && ${2=0.5}<=1 && $2>=0 && ${3=0.5}<=1 && $
             r2dx. 25%,5
           fi
           n. 0,255
-        endl
+        done
       done
       a c
       if $gry
         to_rgb
       fi
-    endl
+    done
   done
 
 #@cli _multigrad : _stepsize=5 _tolerance=10 _smooth=5
@@ -206,7 +206,7 @@ _multigrad : skip ${1=50},${2=10},${3=5}
       +[-2,-1]
       *. -1
       +. 1
-    endl
+    done
   done
 
 #@cli tiletex : _texscale=8 autoangle=-1 _keepimag=0
@@ -269,7 +269,7 @@ tiletex : check "${1=8}>0 && isnum(${2=-1.0}) && ${3=0}>=0 && ${3}<3"
         {2*$rsz+1},{2*$rsz+1},1,{s},(2*u-1)*{wh}
         image.. .,{({-2,w}-w)/2},{({-2,h}-h)/2},0,0,1
         rm.
-      endl
+      done
     done
   else # Case 1: Coefficients in polar format have been set in at least one selected image.
     if $impla<0 # Case 1.1: $impla not set (still negative guardian value). Images must be <radius>, <angle> image pairs.
@@ -287,10 +287,10 @@ tiletex : check "${1=8}>0 && isnum(${2=-1.0}) && ${3=0}>=0 && ${3}<3"
               /[0,1] 255
               *[1] {2*pi}
               polar2complex[0,1]
-            endl
+            done
           done
           a[0--1] c
-        endl
+        done
       done
     else # Case 1.2: Odd numbered selection permitted when $impla is not negative. Furnishes constant angle field.
       repeat $!
@@ -305,10 +305,10 @@ tiletex : check "${1=8}>0 && isnum(${2=-1.0}) && ${3=0}>=0 && ${3}<3"
               /[0,1] 255
               *[0] {cos($impla)}
               *[1] {sin($impla)}
-            endl
+            done
           done
           a[0--1] c
-        endl
+        done
       done
     fi
   fi
@@ -324,7 +324,7 @@ tiletex : check "${1=8}>0 && isnum(${2=-1.0}) && ${3=0}>=0 && ${3}<3"
           rm..
         fi
       fi
-    endl
+    done
   done
 
 #@gui __
@@ -354,7 +354,7 @@ _rec_tileit:
     gtutor_tileit ${2},${1},${3},${8},${4},${7},${5},${6}
 
 #@cli gtutor_tileit : 0<=_disrupt<=10,0.05<_tsize,0.25<=_spread,0<=_soft,_fillholes:True,-180<=_lightangle<=180,2<=_ccount<=32,_fcolor:False
-#@cli : Generate a mosaic from an image. Works best with line art cartoons with flat color. 
+#@cli : Generate a mosaic from an image. Works best with line art cartoons with flat color.
 #@cli : disrupt=5      Rotates, scales and displaces tiles. Suggest 0-10.
 #@cli : tsize=1.0      Tile size relative to image. 1.0 → tile diagonal is 2.5% of the image diagonal.
 #@cli : spread=1.5     Increasing promotes dropped tiles, gaps at junctions and runs. Suggest 0-3.
@@ -375,7 +375,7 @@ tsize=$2*0.025*sqrt(w^2+h^2)
 spread=$3
 soft=$4
 fillholes=$5
-lightangle=$6	
+lightangle=$6
 ccount=$7
 fcolor=$8
 
@@ -503,7 +503,7 @@ fcolor=$8
       -fill.. 'i>=127?255:0'
       -fill. 'i>0.05?1:0'
       -fill. 'i#-2==0?0:i'
-         
+
       -if $fcolor # Do light and shade?
          -if $fillholes
             # Fill holes in the plotting field
@@ -522,7 +522,7 @@ fcolor=$8
          -pow. 0.25
          -blur. 0.875,1,1
          -normalize[heightmap] 0,1
-   
+
          -if {$fillholes==0}
             # Poke holes in the height map
             -fill[heightmap] 'i#-2==0?0:i'
@@ -531,10 +531,10 @@ fcolor=$8
             -fill[plottingfield] 'i#-2==0?I#-5*i#-4:I'
          -fi
          -remove[qcolor,qlumin]
-   
+
          # Cheap Fingerpaint Lighting
          # Derive shadow, hightlight, color
-   
+
          -normalize[plottingfield] 0,1
 
          # Light
@@ -574,7 +574,7 @@ fcolor=$8
          -fi
          -keep[0]
       -fi # else doing light and shade
-   -endlocal
+   -done
 -done
 
 #@gui __
@@ -708,7 +708,7 @@ gtutor_fpaint :
         rv[-2,-1]
         a[-2,-1] c
       fi
-    endl
+    done
   done
 
 gtutor_fpaint_preview :
@@ -796,7 +796,7 @@ gtutor_hairlock :
       n. 0,{51*(1+4*$opac)}
       a[-2,-1] c
       n. 0,255
-    endl
+    done
   done
 
 gtutor_hairlock_preview :
@@ -850,7 +850,7 @@ _hcolor : skip ${1=40},${2=0.5},${3=0.5},${4=0},${5=0.5},${6=1},${7=1}
       pointcloud. 0,{-2,w},{-2,h},1,{-2,s}
       rm..
       hsl2rgb.
-    endl
+    done
   done
 
 #@gui _
@@ -860,4 +860,3 @@ _hcolor : skip ${1=40},${2=0.5},${3=0.5},${4=0},${5=0.5},${6=1},${7=1}
 # End:
 #
 # (End of G'MIC custom commands)
-
